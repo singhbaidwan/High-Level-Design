@@ -29,6 +29,8 @@ We are going to discuss **all High Level Designs in detail** with real-world thi
 - `architects/Monolith/content.md` - section workspace for monolith-focused deep dives
 - `architects/monolithic/monolithic-architecture.md` - delivery framework breakdown of monolithic architecture
 - `architects/monolithic/images/` - diagrams for monolithic architecture
+- `architects/layered/layered-architecture.md` - delivery framework breakdown of layered architecture
+- `architects/layered/images/` - diagrams for layered architecture
 - `architects/images/` - localized diagrams used by the docs
 
 ## Topics Covered (and expanding)

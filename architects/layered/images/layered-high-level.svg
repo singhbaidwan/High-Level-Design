@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="760" viewBox="0 0 1300 760">
+  <rect width="1300" height="760" fill="#f8fafc"/>
+  <text x="40" y="58" font-family="Arial, sans-serif" font-size="34" fill="#0f172a" font-weight="700">Layered Architecture - Conceptual System Diagram</text>
+
+  <rect x="60" y="120" width="220" height="90" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="110" y="174" font-family="Arial, sans-serif" font-size="24" fill="#1e3a8a">Client</text>
+
+  <rect x="340" y="120" width="220" height="90" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="385" y="174" font-family="Arial, sans-serif" font-size="24" fill="#166534">Load Balancer</text>
+
+  <rect x="620" y="90" width="620" height="520" rx="16" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="655" y="130" font-family="Arial, sans-serif" font-size="28" fill="#9a3412" font-weight="700">Application Server (Single Deployable Unit)</text>
+
+  <rect x="680" y="160" width="500" height="80" rx="10" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="820" y="208" font-family="Arial, sans-serif" font-size="24" fill="#7c2d12">Controller Layer</text>
+
+  <rect x="680" y="255" width="500" height="80" rx="10" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="840" y="303" font-family="Arial, sans-serif" font-size="24" fill="#7c2d12">Service Layer</text>
+
+  <rect x="680" y="350" width="500" height="80" rx="10" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="815" y="398" font-family="Arial, sans-serif" font-size="24" fill="#7c2d12">Repository Layer</text>
+
+  <rect x="680" y="445" width="500" height="80" rx="10" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="810" y="493" font-family="Arial, sans-serif" font-size="24" fill="#7c2d12">Data Access / ORM</text>
+
+  <rect x="790" y="650" width="280" height="80" rx="12" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+  <text x="870" y="698" font-family="Arial, sans-serif" font-size="24" fill="#4c1d95">Shared DB</text>
+
+  <rect x="450" y="650" width="250" height="80" rx="12" fill="#fef9c3" stroke="#a16207" stroke-width="2"/>
+  <text x="540" y="698" font-family="Arial, sans-serif" font-size="24" fill="#713f12">Cache (Optional)</text>
+
+  <line x1="280" y1="165" x2="340" y2="165" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="560" y1="165" x2="620" y2="165" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="930" y1="610" x2="930" y2="650" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="770" y1="560" x2="650" y2="650" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+  </defs>
+</svg>
