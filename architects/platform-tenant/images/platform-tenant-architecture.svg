@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="840" viewBox="0 0 1400 840">
+  <rect width="1400" height="840" fill="#f8fafc"/>
+  <text x="40" y="58" font-family="Arial, sans-serif" font-size="34" fill="#0f172a" font-weight="700">Platform Tenant Architecture - Conceptual Diagram</text>
+
+  <rect x="60" y="130" width="190" height="80" rx="12" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="118" y="178" font-family="Arial, sans-serif" font-size="24" fill="#1e3a8a">Clients</text>
+
+  <rect x="300" y="120" width="230" height="95" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="346" y="175" font-family="Arial, sans-serif" font-size="24" fill="#166534">API Gateway</text>
+
+  <rect x="580" y="120" width="270" height="95" rx="12" fill="#fef9c3" stroke="#a16207" stroke-width="2"/>
+  <text x="620" y="175" font-family="Arial, sans-serif" font-size="24" fill="#713f12">Tenant Resolver</text>
+
+  <rect x="900" y="120" width="220" height="95" rx="12" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+  <text x="960" y="175" font-family="Arial, sans-serif" font-size="24" fill="#7f1d1d">Policy Engine</text>
+
+  <rect x="1170" y="120" width="180" height="95" rx="12" fill="#e0e7ff" stroke="#4338ca" stroke-width="2"/>
+  <text x="1205" y="175" font-family="Arial, sans-serif" font-size="24" fill="#312e81">Quota</text>
+
+  <rect x="250" y="290" width="900" height="420" rx="16" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="300" y="335" font-family="Arial, sans-serif" font-size="30" fill="#9a3412" font-weight="700">Shared Platform Application Layer</text>
+
+  <rect x="310" y="370" width="250" height="130" rx="12" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="370" y="430" font-family="Arial, sans-serif" font-size="24" fill="#7c2d12">Tenant A</text>
+  <text x="335" y="465" font-family="Arial, sans-serif" font-size="20" fill="#7c2d12">Service Context</text>
+
+  <rect x="575" y="370" width="250" height="130" rx="12" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="635" y="430" font-family="Arial, sans-serif" font-size="24" fill="#7c2d12">Tenant B</text>
+  <text x="600" y="465" font-family="Arial, sans-serif" font-size="20" fill="#7c2d12">Service Context</text>
+
+  <rect x="840" y="370" width="250" height="130" rx="12" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="900" y="430" font-family="Arial, sans-serif" font-size="24" fill="#7c2d12">Tenant C</text>
+  <text x="865" y="465" font-family="Arial, sans-serif" font-size="20" fill="#7c2d12">Service Context</text>
+
+  <rect x="320" y="540" width="240" height="130" rx="12" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+  <text x="365" y="598" font-family="Arial, sans-serif" font-size="24" fill="#4c1d95">Tenant A DB</text>
+  <text x="350" y="630" font-family="Arial, sans-serif" font-size="18" fill="#5b21b6">(Schema/DB slice)</text>
+
+  <rect x="585" y="540" width="240" height="130" rx="12" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+  <text x="630" y="598" font-family="Arial, sans-serif" font-size="24" fill="#4c1d95">Tenant B DB</text>
+  <text x="615" y="630" font-family="Arial, sans-serif" font-size="18" fill="#5b21b6">(Schema/DB slice)</text>
+
+  <rect x="850" y="540" width="240" height="130" rx="12" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+  <text x="895" y="598" font-family="Arial, sans-serif" font-size="24" fill="#4c1d95">Tenant C DB</text>
+  <text x="880" y="630" font-family="Arial, sans-serif" font-size="18" fill="#5b21b6">(Schema/DB slice)</text>
+
+  <rect x="1170" y="345" width="180" height="110" rx="12" fill="#ecfeff" stroke="#0e7490" stroke-width="2"/>
+  <text x="1208" y="407" font-family="Arial, sans-serif" font-size="24" fill="#155e75">Audit</text>
+  <text x="1200" y="435" font-family="Arial, sans-serif" font-size="18" fill="#155e75">Pipeline</text>
+
+  <line x1="250" y1="170" x2="300" y2="170" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="530" y1="170" x2="580" y2="170" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="850" y1="170" x2="900" y2="170" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="1120" y1="170" x2="1170" y2="170" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <line x1="715" y1="215" x2="715" y2="290" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <line x1="435" y1="500" x2="440" y2="540" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="700" y1="500" x2="705" y2="540" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="965" y1="500" x2="970" y2="540" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <line x1="1150" y1="400" x2="1170" y2="400" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <text x="60" y="785" font-family="Arial, sans-serif" font-size="20" fill="#475569">Tenant context is propagated end-to-end for auth, quota, routing, data partitioning, and audit.</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+  </defs>
+</svg>
