@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <rect width="1200" height="700" fill="#f8fafc"/>
+  <text x="40" y="60" font-family="Arial, sans-serif" font-size="34" fill="#0f172a" font-weight="700">Monolith Scaling: Vertical vs Horizontal</text>
+
+  <rect x="70" y="120" rx="14" ry="14" width="500" height="500" fill="#ecfeff" stroke="#0e7490" stroke-width="2"/>
+  <text x="130" y="170" font-family="Arial, sans-serif" font-size="30" fill="#155e75" font-weight="700">Vertical Scaling (Scale Up)</text>
+
+  <rect x="160" y="220" width="320" height="320" rx="12" ry="12" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+  <text x="220" y="280" font-family="Arial, sans-serif" font-size="24" fill="#164e63">Single Bigger Server</text>
+  <text x="210" y="330" font-family="Arial, sans-serif" font-size="20" fill="#0f766e">More CPU / RAM / IOPS</text>
+  <text x="190" y="430" font-family="Arial, sans-serif" font-size="19" fill="#0f766e">+ Simple to operate</text>
+  <text x="190" y="465" font-family="Arial, sans-serif" font-size="19" fill="#0f766e">- Hardware ceiling</text>
+  <text x="190" y="500" font-family="Arial, sans-serif" font-size="19" fill="#0f766e">- Cost jumps at higher tiers</text>
+
+  <rect x="630" y="120" rx="14" ry="14" width="500" height="500" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
+  <text x="670" y="170" font-family="Arial, sans-serif" font-size="30" fill="#166534" font-weight="700">Horizontal Scaling (Scale Out)</text>
+
+  <rect x="695" y="230" width="110" height="120" rx="10" ry="10" fill="#dcfce7" stroke="#16a34a"/>
+  <rect x="825" y="230" width="110" height="120" rx="10" ry="10" fill="#dcfce7" stroke="#16a34a"/>
+  <rect x="955" y="230" width="110" height="120" rx="10" ry="10" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="715" y="295" font-family="Arial, sans-serif" font-size="20" fill="#14532d">App 1</text>
+  <text x="845" y="295" font-family="Arial, sans-serif" font-size="20" fill="#14532d">App 2</text>
+  <text x="975" y="295" font-family="Arial, sans-serif" font-size="20" fill="#14532d">App 3</text>
+
+  <rect x="760" y="410" width="240" height="120" rx="10" ry="10" fill="#ede9fe" stroke="#7c3aed"/>
+  <text x="845" y="475" font-family="Arial, sans-serif" font-size="22" fill="#4c1d95">Shared DB</text>
+
+  <line x1="750" y1="350" x2="840" y2="410" stroke="#334155" stroke-width="3"/>
+  <line x1="880" y1="350" x2="880" y2="410" stroke="#334155" stroke-width="3"/>
+  <line x1="1010" y1="350" x2="920" y2="410" stroke="#334155" stroke-width="3"/>
+
+  <text x="680" y="565" font-family="Arial, sans-serif" font-size="19" fill="#166534">+ Better traffic handling</text>
+  <text x="680" y="595" font-family="Arial, sans-serif" font-size="19" fill="#166534">- DB becomes bottleneck first</text>
+</svg>

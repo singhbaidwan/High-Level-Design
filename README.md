@@ -27,6 +27,8 @@ We are going to discuss **all High Level Designs in detail** with real-world thi
 - `architects/summary.md` - consolidated architecture summary with diagrams
 - `architects/interview-ready.md` - interview-focused architecture narrative
 - `architects/Monolith/content.md` - section workspace for monolith-focused deep dives
+- `architects/monolithic/monolithic-architecture.md` - delivery framework breakdown of monolithic architecture
+- `architects/monolithic/images/` - diagrams for monolithic architecture
 - `architects/images/` - localized diagrams used by the docs
 
 ## Topics Covered (and expanding)
@@ -60,7 +62,7 @@ Use these keywords to find this repository and related topics quickly on GitHub:
 
 ## Planned Additions
 
-- deeper domain designs (payments, ledger, fraud, reconciliation)
+- deeper domain designs 
 - API gateway and service mesh patterns
 - caching and data partitioning strategies
 - consistency models and failure handling playbooks

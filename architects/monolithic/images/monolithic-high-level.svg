@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <rect width="1200" height="680" fill="#f8fafc"/>
+  <text x="40" y="60" font-family="Arial, sans-serif" font-size="34" fill="#0f172a" font-weight="700">Monolithic Architecture - High Level Request Flow</text>
+
+  <rect x="60" y="140" rx="12" ry="12" width="220" height="90" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="95" y="194" font-family="Arial, sans-serif" font-size="24" fill="#1e3a8a">Client / Browser</text>
+
+  <rect x="340" y="140" rx="12" ry="12" width="220" height="90" fill="#dcfce7" stroke="#166534" stroke-width="2"/>
+  <text x="385" y="194" font-family="Arial, sans-serif" font-size="24" fill="#14532d">Load Balancer</text>
+
+  <rect x="620" y="110" rx="16" ry="16" width="500" height="350" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="650" y="150" font-family="Arial, sans-serif" font-size="28" fill="#9a3412" font-weight="700">Monolith (Single Deployable Unit)</text>
+
+  <rect x="660" y="180" rx="10" ry="10" width="420" height="65" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="690" y="221" font-family="Arial, sans-serif" font-size="22" fill="#7c2d12">API / Controllers</text>
+
+  <rect x="660" y="265" rx="10" ry="10" width="420" height="65" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="690" y="306" font-family="Arial, sans-serif" font-size="22" fill="#7c2d12">Business Logic Modules</text>
+
+  <rect x="660" y="350" rx="10" ry="10" width="420" height="65" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="690" y="391" font-family="Arial, sans-serif" font-size="22" fill="#7c2d12">Repositories / ORM Layer</text>
+
+  <rect x="760" y="520" rx="12" ry="12" width="280" height="95" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+  <text x="830" y="565" font-family="Arial, sans-serif" font-size="24" fill="#4c1d95">Shared DB</text>
+  <text x="800" y="595" font-family="Arial, sans-serif" font-size="18" fill="#5b21b6">(Single Source of Truth)</text>
+
+  <rect x="420" y="520" rx="12" ry="12" width="250" height="95" fill="#fef9c3" stroke="#a16207" stroke-width="2"/>
+  <text x="500" y="565" font-family="Arial, sans-serif" font-size="24" fill="#713f12">Cache</text>
+  <text x="465" y="595" font-family="Arial, sans-serif" font-size="18" fill="#854d0e">(Optional: Redis)</text>
+
+  <line x1="280" y1="185" x2="340" y2="185" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="560" y1="185" x2="620" y2="185" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="900" y1="460" x2="900" y2="520" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="745" y1="430" x2="620" y2="560" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+  </defs>
+</svg>
