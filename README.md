@@ -31,6 +31,7 @@ We are going to discuss **all High Level Designs in detail** with real-world thi
 - `architects/monolithic/images/` - diagrams for monolithic architecture
 - `architects/layered/layered-architecture.md` - delivery framework breakdown of layered architecture
 - `architects/layered/images/` - diagrams for layered architecture
+- `architects/hexagonal/`, `architects/event-driven/`, `architects/saga/`, `architects/outbox/`, `architects/cqrs/`, `architects/cell-based/`, `architects/active-active-passive/`, `architects/observability/`, `architects/platform-tenant/` - interview-ready deep-dive sections
 - `architects/images/` - localized diagrams used by the docs
 
 ## Topics Covered (and expanding)
@@ -47,6 +48,7 @@ We are going to discuss **all High Level Designs in detail** with real-world thi
 - Cell-Based Architecture
 - Active-Active and Active-Passive design
 - Observability-Driven Architecture
+- Platform Tenant Architecture (Multi-Tenant Platform Design)
 - Scalability, Availability, Reliability, Fault Tolerance
 
 ## Why Follow This Repository
