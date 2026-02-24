@@ -391,3 +391,70 @@ flowchart TB
    - Chose async finalization for reliability and scale, at cost of eventual status.
    - Chose strong correctness checks on write path, at cost of occasional contention.
 4. Mention next extension if asked: multi-provider smart routing and cost optimization.
+
+---
+
+## 9) Network validation findings (Visa and Mastercard)
+
+Added after reviewing public scheme documentation (as of February 24, 2026).
+
+### 9.1 What already aligns in this design
+
+- Idempotent refund create API with retry safety.
+- Asynchronous provider execution with outbox and worker retry.
+- Reconciliation for timeout/unknown outcomes.
+- Auditability via immutable ledger and event trail.
+
+### 9.2 Scheme-accurate additions to include
+
+1. Expand refund lifecycle beyond `pending/succeeded/failed` to include network phases:
+   - `authorized`
+   - `cleared`
+   - `settled`
+   - `issuer_posted` (best-effort visibility, issuer-dependent)
+2. Persist original-transaction linkage fields for match quality and dispute defense:
+   - `scheme` (`visa`/`mastercard`)
+   - `scheme_transaction_id` / `trace_id`
+   - `original_network_reference`
+   - `acquirer_reference_number`
+3. Add compliance timers and controls:
+   - `clearing_due_at`
+   - `reversal_due_at`
+   - alerting/escalation on breach
+4. Add a post-refund dispute branch (for example, credit-not-processed cases), separate from refund execution.
+5. Keep customer ETA messaging conservative because issuer posting time is outside merchant/platform control.
+
+### 9.3 Data model deltas
+
+- `refund`:
+  - `scheme`
+  - `network_ref_id`
+  - `arn`
+  - `network_status`
+  - `clearing_due_at`
+  - `reversal_due_at`
+  - `last_scheme_update_at`
+- `refund_attempt`:
+  - `provider_idempotency_token`
+  - `provider_reference`
+  - `scheme_trace_id`
+  - `raw_response_code`
+- `reconciliation_record`:
+  - `scheme_file_date`
+  - `mismatch_type`
+  - `resolution_status`
+
+### 9.4 Workflow deltas
+
+1. On create, validate and persist refund intent with network-linkage placeholders.
+2. Worker sends refund with original transaction references where required/available.
+3. On webhook or polling update, advance network state machine monotonically.
+4. Scheduler enforces clearing/reversal SLAs and opens operations incident on breaches.
+5. Reconciliation cross-checks acquirer/provider/scheme records and resolves mismatches.
+
+### 9.5 Public references
+
+- Visa Core Rules and Visa Product and Service Rules (public PDF): `https://usa.visa.com/dam/VCOM/download/about-visa/visa-rules-public.pdf`
+- Visa Direct documentation (refund APIs and operational guidance): `https://developer.visa.com/capabilities/visa_direct/docs`
+- Mastercard Transaction Processing Rules (public PDF): `https://www.mastercard.com/content/dam/public/mastercardcom/na/global-site/documents/transaction-processing-rules.pdf`
+- Mastercard Chargeback Guide (merchant edition, public PDF): `https://www.mastercard.us/content/dam/public/mastercardcom/na/global-site/documents/chargeback-guide.pdf`
