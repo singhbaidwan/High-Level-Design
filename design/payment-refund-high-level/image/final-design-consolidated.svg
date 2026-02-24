@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1380" viewBox="0 0 2400 1380">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+    </marker>
+    <style>
+      .title { font: 700 32px Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .plane { fill-opacity: 0.4; stroke-width: 2.5; rx: 18; ry: 18; }
+      .clientPlane { fill: #dbeafe; stroke: #1d4ed8; }
+      .controlPlane { fill: #e0e7ff; stroke: #4338ca; }
+      .dataPlane { fill: #ccfbf1; stroke: #0f766e; }
+      .asyncPlane { fill: #dcfce7; stroke: #15803d; }
+      .providerPlane { fill: #ffedd5; stroke: #c2410c; }
+      .feedbackPlane { fill: #fef9c3; stroke: #a16207; }
+      .opsPlane { fill: #fee2e2; stroke: #b91c1c; }
+      .svc { fill: #f8fafc; stroke: #334155; stroke-width: 2; rx: 12; ry: 12; }
+      .db { fill: #ecfeff; stroke: #0f766e; stroke-width: 2; rx: 12; ry: 12; }
+      .bus { fill: #f0fdf4; stroke: #15803d; stroke-width: 2; rx: 12; ry: 12; }
+      .ext { fill: #fff7ed; stroke: #c2410c; stroke-width: 2; rx: 12; ry: 12; }
+      .ops { fill: #fef2f2; stroke: #b91c1c; stroke-width: 2; rx: 12; ry: 12; }
+      .label { font: 600 16px Arial, Helvetica, sans-serif; fill: #0f172a; text-anchor: middle; dominant-baseline: middle; }
+      .planeLabel { font: 700 18px Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .line { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <text x="1200" y="46" class="title" text-anchor="middle">Final Design: Payment Refund Architecture (Consolidated)</text>
+
+  <rect class="plane clientPlane" x="40" y="80" width="650" height="300" />
+  <text class="planeLabel" x="70" y="114">Client and Edge</text>
+
+  <rect class="plane controlPlane" x="730" y="80" width="620" height="300" />
+  <text class="planeLabel" x="760" y="114">Refund Control Plane</text>
+
+  <rect class="plane dataPlane" x="1380" y="80" width="980" height="420" />
+  <text class="planeLabel" x="1410" y="114">Transactional Data Plane</text>
+
+  <rect class="plane asyncPlane" x="730" y="410" width="620" height="320" />
+  <text class="planeLabel" x="760" y="444">Async Processing Plane</text>
+
+  <rect class="plane providerPlane" x="1380" y="540" width="980" height="260" />
+  <text class="planeLabel" x="1410" y="574">Provider Integration Plane</text>
+
+  <rect class="plane feedbackPlane" x="730" y="840" width="1630" height="360" />
+  <text class="planeLabel" x="760" y="874">Feedback and Reconciliation Plane</text>
+
+  <rect class="plane opsPlane" x="40" y="410" width="650" height="790" />
+  <text class="planeLabel" x="70" y="444">Observability and Governance</text>
+
+  <rect class="svc" x="100" y="190" width="180" height="90" />
+  <text class="label" x="190" y="235">Merchant Client</text>
+
+  <rect class="svc" x="320" y="190" width="180" height="90" />
+  <text class="label" x="410" y="235">Edge and WAF</text>
+
+  <rect class="svc" x="540" y="190" width="120" height="90" />
+  <text class="label" x="600" y="235">API GW</text>
+
+  <rect class="svc" x="790" y="190" width="190" height="90" />
+  <text class="label" x="885" y="235">Refund API</text>
+
+  <rect class="svc" x="1030" y="140" width="250" height="90" />
+  <text class="label" x="1155" y="185">AuthN and AuthZ</text>
+
+  <rect class="db" x="1030" y="250" width="250" height="90" />
+  <text class="label" x="1155" y="295">Idempotency Redis</text>
+
+  <rect class="db" x="1450" y="200" width="360" height="120" />
+  <text class="label" x="1630" y="252">Sharded OLTP</text>
+  <text class="label" x="1630" y="280">Payments, Refunds, Ledger, Outbox</text>
+
+  <rect class="db" x="1860" y="120" width="220" height="90" />
+  <text class="label" x="1970" y="165">Refund Cache</text>
+
+  <rect class="svc" x="1860" y="260" width="220" height="90" />
+  <text class="label" x="1970" y="305">Outbox Relay</text>
+
+  <rect class="bus" x="790" y="530" width="190" height="90" />
+  <text class="label" x="885" y="575">Event Bus</text>
+
+  <rect class="svc" x="1030" y="530" width="190" height="90" />
+  <text class="label" x="1125" y="575">Worker Fleet</text>
+
+  <rect class="bus" x="1260" y="530" width="90" height="90" />
+  <text class="label" x="1305" y="575">DLQ</text>
+
+  <rect class="svc" x="1450" y="620" width="180" height="90" />
+  <text class="label" x="1540" y="665">Circuit Breaker</text>
+
+  <rect class="ext" x="1670" y="620" width="180" height="90" />
+  <text class="label" x="1760" y="665">Provider Adapter</text>
+
+  <rect class="ext" x="1890" y="620" width="180" height="90" />
+  <text class="label" x="1980" y="665">PSP Provider</text>
+
+  <rect class="svc" x="800" y="950" width="220" height="100" />
+  <text class="label" x="910" y="1000">Webhook Ingest</text>
+
+  <rect class="svc" x="1070" y="1050" width="250" height="100" />
+  <text class="label" x="1195" y="1100">Reconciliation Jobs</text>
+
+  <rect class="svc" x="1370" y="950" width="340" height="100" />
+  <text class="label" x="1540" y="1000">Status Event Consumers</text>
+
+  <rect class="ops" x="100" y="650" width="220" height="100" />
+  <text class="label" x="210" y="700">Metrics Logs Traces</text>
+
+  <rect class="ops" x="380" y="900" width="220" height="100" />
+  <text class="label" x="490" y="950">Immutable Audit Store</text>
+
+  <line class="line" x1="280" y1="235" x2="320" y2="235" />
+  <line class="line" x1="500" y1="235" x2="540" y2="235" />
+  <line class="line" x1="660" y1="235" x2="790" y2="235" />
+
+  <line class="line" x1="980" y1="225" x2="1030" y2="185" />
+  <line class="line" x1="980" y1="245" x2="1030" y2="295" />
+
+  <line class="line" x1="980" y1="235" x2="1450" y2="250" />
+  <line class="line" x1="980" y1="235" x2="1860" y2="165" />
+
+  <line class="line" x1="1810" y1="290" x2="1860" y2="305" />
+  <line class="line" x1="1860" y1="305" x2="950" y2="530" />
+
+  <line class="line" x1="980" y1="575" x2="1030" y2="575" />
+  <line class="line" x1="980" y1="575" x2="1260" y2="575" />
+
+  <line class="line" x1="1220" y1="575" x2="1450" y2="665" />
+  <line class="line" x1="1630" y1="665" x2="1670" y2="665" />
+  <line class="line" x1="1850" y1="665" x2="1890" y2="665" />
+
+  <line class="line" x1="1890" y1="690" x2="1020" y2="950" />
+  <line class="line" x1="910" y1="950" x2="1510" y2="320" />
+  <line class="line" x1="910" y1="950" x2="850" y2="620" />
+
+  <line class="line" x1="1320" y1="1100" x2="1890" y2="690" />
+  <line class="line" x1="1320" y1="1100" x2="1540" y2="320" />
+  <line class="line" x1="980" y1="575" x2="1370" y2="1000" />
+
+  <line class="line" x1="885" y1="280" x2="260" y2="650" />
+  <line class="line" x1="1125" y1="620" x2="260" y2="700" />
+  <line class="line" x1="910" y1="1000" x2="260" y2="730" />
+
+  <line class="line" x1="1450" y1="300" x2="600" y2="950" />
+
+</svg>
