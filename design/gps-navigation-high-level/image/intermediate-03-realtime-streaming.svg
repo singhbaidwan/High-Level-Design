@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="1120" viewBox="0 0 2100 1120">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+    </marker>
+    <style>
+      .title { font: 700 30px Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .svc { fill: #e0ecff; stroke: #1d4ed8; stroke-width: 2.2; rx: 14; ry: 14; }
+      .db { fill: #ecfeff; stroke: #0f766e; stroke-width: 2.2; rx: 14; ry: 14; }
+      .bus { fill: #f0fdf4; stroke: #15803d; stroke-width: 2.2; rx: 14; ry: 14; }
+      .ext { fill: #fff7ed; stroke: #c2410c; stroke-width: 2.2; rx: 14; ry: 14; }
+      .ops { fill: #fefce8; stroke: #a16207; stroke-width: 2.2; rx: 14; ry: 14; }
+      .label { font: 600 18px Arial, Helvetica, sans-serif; fill: #111827; text-anchor: middle; dominant-baseline: middle; }
+      .small { font: 500 14px Arial, Helvetica, sans-serif; fill: #1f2937; text-anchor: middle; dominant-baseline: middle; }
+      .line { stroke: #334155; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .note { font: 500 14px Arial, Helvetica, sans-serif; fill: #475569; }
+    </style>
+  </defs>
+
+  <text x="1050" y="48" class="title" text-anchor="middle">Intermediate Design 3: Real-Time Streaming Traffic and Reroute Triggers</text>
+
+  <rect class="ext" x="60" y="130" width="230" height="100" />
+  <text class="label" x="175" y="180">GPS Probe Events</text>
+
+  <rect class="ext" x="60" y="280" width="230" height="100" />
+  <text class="label" x="175" y="330">Partner Feeds</text>
+
+  <rect class="ext" x="60" y="430" width="230" height="100" />
+  <text class="label" x="175" y="480">User Incidents</text>
+
+  <rect class="svc" x="360" y="260" width="280" height="140" />
+  <text class="label" x="500" y="315">Ingestion Gateway</text>
+  <text class="small" x="500" y="345">normalize + auth + schema checks</text>
+
+  <rect class="bus" x="730" y="260" width="320" height="140" />
+  <text class="label" x="890" y="315">Kafka / PubSub</text>
+  <text class="small" x="890" y="345">partition by geo-cell + event-time</text>
+
+  <rect class="svc" x="1140" y="160" width="320" height="140" />
+  <text class="label" x="1300" y="215">Map-Matching Processor</text>
+  <text class="small" x="1300" y="245">probe -> road edge</text>
+
+  <rect class="svc" x="1140" y="340" width="320" height="140" />
+  <text class="label" x="1300" y="395">Validation + Dedup Processor</text>
+  <text class="small" x="1300" y="425">trust scoring/outlier rejection</text>
+
+  <rect class="svc" x="1140" y="520" width="320" height="140" />
+  <text class="label" x="1300" y="575">Traffic Aggregator</text>
+  <text class="small" x="1300" y="605">speed/confidence per edge</text>
+
+  <rect class="cache" x="1540" y="170" width="340" height="120" style="fill:#f0fdf4;stroke:#15803d;stroke-width:2.2;rx:14;ry:14;" />
+  <text class="label" x="1710" y="215">Hot Traffic Cache</text>
+  <text class="small" x="1710" y="245">TTL edge weights</text>
+
+  <rect class="db" x="1540" y="350" width="340" height="120" />
+  <text class="label" x="1710" y="395">Historical Traffic Store</text>
+
+  <rect class="db" x="1540" y="530" width="340" height="120" />
+  <text class="label" x="1710" y="575">Incident State Store</text>
+
+  <rect class="svc" x="350" y="700" width="300" height="130" />
+  <text class="label" x="500" y="750">Route Service</text>
+  <text class="small" x="500" y="780">uses live edge weights</text>
+
+  <rect class="svc" x="760" y="700" width="320" height="130" />
+  <text class="label" x="920" y="750">Navigation Session Manager</text>
+  <text class="small" x="920" y="780">detect impacted sessions</text>
+
+  <rect class="ops" x="1190" y="700" width="300" height="130" />
+  <text class="label" x="1340" y="750">Reroute Trigger Service</text>
+  <text class="small" x="1340" y="780">push selective reroute events</text>
+
+  <rect class="svc" x="1600" y="740" width="280" height="110" />
+  <text class="label" x="1740" y="790">API Gateway</text>
+
+  <rect class="svc" x="1910" y="740" width="170" height="110" />
+  <text class="label" x="1995" y="790">Clients</text>
+
+  <rect class="ops" x="760" y="900" width="320" height="110" />
+  <text class="label" x="920" y="950">DLQ + Replay Tooling</text>
+
+  <line class="line" x1="290" y1="180" x2="360" y2="300" />
+  <line class="line" x1="290" y1="330" x2="360" y2="330" />
+  <line class="line" x1="290" y1="480" x2="360" y2="360" />
+
+  <line class="line" x1="640" y1="330" x2="730" y2="330" />
+
+  <line class="line" x1="1050" y1="300" x2="1140" y2="230" />
+  <line class="line" x1="1050" y1="330" x2="1140" y2="410" />
+  <line class="line" x1="1050" y1="360" x2="1140" y2="590" />
+
+  <line class="line" x1="1460" y1="230" x2="1540" y2="230" />
+  <line class="line" x1="1460" y1="410" x2="1540" y2="410" />
+  <line class="line" x1="1460" y1="590" x2="1540" y2="590" />
+
+  <line class="line" x1="1710" y1="290" x2="560" y2="700" />
+  <line class="line" x1="1710" y1="290" x2="930" y2="700" />
+  <line class="line" x1="1710" y1="590" x2="1080" y2="760" />
+
+  <line class="line" x1="650" y1="760" x2="760" y2="760" />
+  <line class="line" x1="1080" y1="760" x2="1190" y2="760" />
+  <line class="line" x1="1490" y1="760" x2="1600" y2="790" />
+  <line class="line" x1="1880" y1="790" x2="1910" y2="790" />
+
+  <line class="line" x1="890" y1="400" x2="920" y2="900" />
+
+  <text class="note" x="640" y="220">asynchronous ingestion decouples volatile traffic feeds</text>
+  <text class="note" x="1420" y="880">reroute only affected sessions to protect compute budget</text>
+</svg>

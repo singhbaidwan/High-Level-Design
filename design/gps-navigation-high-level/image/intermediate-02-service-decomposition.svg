@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="980" viewBox="0 0 1900 980">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+    </marker>
+    <style>
+      .title { font: 700 30px Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .svc { fill: #e0ecff; stroke: #1d4ed8; stroke-width: 2.2; rx: 14; ry: 14; }
+      .db { fill: #ecfeff; stroke: #0f766e; stroke-width: 2.2; rx: 14; ry: 14; }
+      .cache { fill: #f0fdf4; stroke: #15803d; stroke-width: 2.2; rx: 14; ry: 14; }
+      .label { font: 600 19px Arial, Helvetica, sans-serif; fill: #111827; text-anchor: middle; dominant-baseline: middle; }
+      .small { font: 500 15px Arial, Helvetica, sans-serif; fill: #1f2937; text-anchor: middle; dominant-baseline: middle; }
+      .line { stroke: #334155; stroke-width: 2.6; fill: none; marker-end: url(#arrow); }
+      .note { font: 500 14px Arial, Helvetica, sans-serif; fill: #475569; }
+    </style>
+  </defs>
+
+  <text x="950" y="48" class="title" text-anchor="middle">Intermediate Design 2: Service Decomposition by Domain</text>
+
+  <rect class="svc" x="80" y="350" width="240" height="110" />
+  <text class="label" x="200" y="400">Client Apps</text>
+
+  <rect class="svc" x="390" y="350" width="240" height="110" />
+  <text class="label" x="510" y="400">API Gateway</text>
+
+  <rect class="svc" x="730" y="140" width="250" height="110" />
+  <text class="label" x="855" y="190">Route Service</text>
+
+  <rect class="svc" x="730" y="300" width="250" height="110" />
+  <text class="label" x="855" y="350">Search Service</text>
+
+  <rect class="svc" x="730" y="460" width="250" height="110" />
+  <text class="label" x="855" y="510">Map Tile Service</text>
+
+  <rect class="svc" x="730" y="620" width="250" height="110" />
+  <text class="label" x="855" y="670">User Service</text>
+
+  <rect class="svc" x="1060" y="140" width="250" height="110" />
+  <text class="label" x="1185" y="190">Maneuver Service</text>
+
+  <rect class="db" x="1380" y="90" width="360" height="120" />
+  <text class="label" x="1560" y="138">Road Graph Store</text>
+  <text class="small" x="1560" y="170">versioned nodes/edges</text>
+
+  <rect class="cache" x="1380" y="260" width="360" height="120" />
+  <text class="label" x="1560" y="308">Traffic Cache</text>
+  <text class="small" x="1560" y="340">hot edge-weight snapshot</text>
+
+  <rect class="db" x="1380" y="430" width="360" height="120" />
+  <text class="label" x="1560" y="478">POI + Geocode Index</text>
+
+  <rect class="db" x="1380" y="600" width="360" height="120" />
+  <text class="label" x="1560" y="648">Tile Object Storage</text>
+
+  <rect class="db" x="1380" y="770" width="360" height="120" />
+  <text class="label" x="1560" y="818">User Profile DB</text>
+
+  <line class="line" x1="320" y1="405" x2="390" y2="405" />
+  <line class="line" x1="630" y1="385" x2="730" y2="195" />
+  <line class="line" x1="630" y1="395" x2="730" y2="355" />
+  <line class="line" x1="630" y1="415" x2="730" y2="515" />
+  <line class="line" x1="630" y1="425" x2="730" y2="675" />
+
+  <line class="line" x1="980" y1="190" x2="1060" y2="190" />
+  <line class="line" x1="1310" y1="190" x2="1380" y2="150" />
+  <line class="line" x1="1185" y1="250" x2="1430" y2="260" />
+  <line class="line" x1="980" y1="190" x2="1380" y2="320" />
+
+  <line class="line" x1="980" y1="350" x2="1380" y2="490" />
+  <line class="line" x1="980" y1="510" x2="1380" y2="660" />
+  <line class="line" x1="980" y1="670" x2="1380" y2="830" />
+
+  <path class="line" d="M 1140 510 C 1000 820, 420 820, 240 520" />
+
+  <text class="note" x="1180" y="305">route = graph + live traffic + maneuvers</text>
+  <text class="note" x="390" y="855">domain separation enables independent scaling</text>
+</svg>

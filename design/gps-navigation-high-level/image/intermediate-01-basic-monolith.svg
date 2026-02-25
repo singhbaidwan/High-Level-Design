@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="860" viewBox="0 0 1700 860">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+    </marker>
+    <style>
+      .title { font: 700 30px Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .svc { fill: #e0ecff; stroke: #1d4ed8; stroke-width: 2.2; rx: 14; ry: 14; }
+      .db { fill: #ecfeff; stroke: #0f766e; stroke-width: 2.2; rx: 14; ry: 14; }
+      .ext { fill: #fff7ed; stroke: #c2410c; stroke-width: 2.2; rx: 14; ry: 14; }
+      .label { font: 600 20px Arial, Helvetica, sans-serif; fill: #111827; text-anchor: middle; dominant-baseline: middle; }
+      .small { font: 500 16px Arial, Helvetica, sans-serif; fill: #1f2937; text-anchor: middle; dominant-baseline: middle; }
+      .line { stroke: #334155; stroke-width: 2.8; fill: none; marker-end: url(#arrow); }
+      .note { font: 500 15px Arial, Helvetica, sans-serif; fill: #475569; }
+    </style>
+  </defs>
+
+  <text x="850" y="48" class="title" text-anchor="middle">Intermediate Design 1: Single-Region Monolith Baseline</text>
+
+  <rect class="svc" x="70" y="220" width="250" height="110" />
+  <text class="label" x="195" y="270">Mobile Clients</text>
+
+  <rect class="svc" x="70" y="400" width="250" height="110" />
+  <text class="label" x="195" y="450">Web Clients</text>
+
+  <rect class="svc" x="420" y="310" width="260" height="120" />
+  <text class="label" x="550" y="355">API Gateway</text>
+
+  <rect class="svc" x="780" y="220" width="430" height="300" />
+  <text class="label" x="995" y="270">Navigation Monolith</text>
+  <text class="small" x="995" y="320">Routing + Search + Tile API</text>
+  <text class="small" x="995" y="350">Traffic Polling + Session Logic</text>
+  <text class="small" x="995" y="380">User/Profile Management</text>
+
+  <rect class="db" x="1320" y="120" width="300" height="110" />
+  <text class="label" x="1470" y="170">Primary DB</text>
+  <text class="small" x="1470" y="205">users/routes/sessions</text>
+
+  <rect class="db" x="1320" y="310" width="300" height="110" />
+  <text class="label" x="1470" y="360">Tile Blob Storage</text>
+
+  <rect class="ext" x="1320" y="500" width="300" height="110" />
+  <text class="label" x="1470" y="550">External Traffic Feed</text>
+
+  <rect class="ext" x="1320" y="680" width="300" height="110" />
+  <text class="label" x="1470" y="730">Push Gateway</text>
+
+  <line class="line" x1="320" y1="275" x2="420" y2="350" />
+  <line class="line" x1="320" y1="455" x2="420" y2="390" />
+  <line class="line" x1="680" y1="370" x2="780" y2="370" />
+
+  <line class="line" x1="1210" y1="255" x2="1320" y2="185" />
+  <line class="line" x1="1210" y1="350" x2="1320" y2="365" />
+  <line class="line" x1="1210" y1="450" x2="1320" y2="555" />
+  <line class="line" x1="1210" y1="495" x2="1320" y2="735" />
+
+  <path class="line" d="M 930 520 C 760 700, 450 710, 250 540" />
+
+  <text class="note" x="1255" y="190">synchronous state writes</text>
+  <text class="note" x="1245" y="555">polling and ingest inline</text>
+  <text class="note" x="620" y="735">response latency tied to monolith workload</text>
+</svg>
