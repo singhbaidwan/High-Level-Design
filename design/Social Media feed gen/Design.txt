@@ -1226,3 +1226,6 @@ Push fan-out system
 Feed generation with ranking
 Caching layer with Redis
 Handle viral content spikes
+
+
+LINK : https://medium.com/codefarm-java-ecosystem/building-a-social-media-feed-system-design-deep-dive-504a0ade27ed
