@@ -1,0 +1,158 @@
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Java Fundamentals
+Chapter 5 — Class Loading Mechanism (Deep Dive)
+
+1. Interview Answer
+The Java Class Loading Mechanism is responsible for dynamically loading .class
+files into memory, verifying them, linking them, and initializing them before
+execution.
+
+Lifecycle:
+Loading
+ ↓
+Linking
+  - Verification
+  - Preparation
+  - Resolution
+ ↓
+Initialization
+ ↓
+Execution
+ ↓
+Unloading (optional)
+
+2. Why Class Loading?
+- Classes are loaded lazily.
+- Reduces startup time.
+- Saves memory.
+- Supports dynamic loading.
+
+3. Class Loader Hierarchy
+
+Bootstrap ClassLoader
+      ↓
+Platform ClassLoader
+      ↓
+Application ClassLoader
+
+Bootstrap:
+Loads java.lang.*, java.util.*, and other core classes.
+
+Platform:
+Loads platform modules.
+
+Application:
+Loads application classes from the classpath.
+
+4. Parent Delegation Model
+
+Application Loader
+      ↓ delegates
+Platform Loader
+      ↓ delegates
+Bootstrap Loader
+
+If parent cannot find the class, control returns to the child loader.
+
+Advantages:
+- Security
+- Prevents duplicate loading
+- Ensures core classes are trusted
+
+5. Linking
+
+Verification:
+Checks bytecode safety.
+
+Preparation:
+Allocates memory for static fields and assigns default values.
+
+Resolution:
+Converts symbolic references into direct references.
+
+6. Initialization
+
+- Executes static blocks.
+- Assigns explicit values to static fields.
+- Happens only once per ClassLoader.
+
+7. Class.forName() vs loadClass()
+
+Class.forName():
+- Loads
+- Links
+- Initializes
+
+loadClass():
+- Loads
+- Links
+- Does not initialize by default
+
+8. ClassNotFoundException vs NoClassDefFoundError
+
+ClassNotFoundException:
+Checked exception when a requested class is missing.
+
+NoClassDefFoundError:
+Runtime error when a class available during compilation cannot be used at runtime.
+
+9. Custom ClassLoaders
+
+Use cases:
+- Plugin systems
+- Hot deployment
+- Application servers
+- Bytecode enhancement
+- Sandboxing
+
+10. Production Example
+
+Spring Boot starts with the Application ClassLoader.
+Hibernate, Mockito, and many frameworks use custom class loaders and bytecode generation.
+
+11. Interview Questions
+
+Q: Why use parent delegation?
+A: To improve security and avoid duplicate loading.
+
+Q: Can the same class be loaded twice?
+A: Yes, by different ClassLoaders. They become different types.
+
+Q: When do static blocks execute?
+A: During class initialization.
+
+12. Senior Cross Questions
+
+Why can't you replace java.lang.String?
+Because Bootstrap ClassLoader loads it before application classes.
+
+Why do app servers use separate ClassLoaders?
+To isolate applications and avoid dependency conflicts.
+
+13. Common Mistakes
+
+- Confusing loading and initialization.
+- Thinking loadClass() executes static blocks.
+- Assuming all classes load during JVM startup.
+
+14. Cheat Sheet
+
+Loading
+ ↓
+Verification
+ ↓
+Preparation
+ ↓
+Resolution
+ ↓
+Initialization
+ ↓
+Execution
+
+15. Practice
+
+1. Explain the class loading lifecycle.
+2. Explain parent delegation.
+3. Compare Class.forName() and loadClass().
+4. Differentiate ClassNotFoundException and NoClassDefFoundError.
+5. Explain custom ClassLoader use cases.

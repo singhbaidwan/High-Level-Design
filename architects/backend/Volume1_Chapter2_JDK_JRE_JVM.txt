@@ -1,0 +1,159 @@
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Java Fundamentals
+Chapter 2 — JDK, JRE and JVM (Deep Dive)
+
+==================================================
+1. Interview Definition
+==================================================
+
+Q: Explain JDK, JRE and JVM.
+
+Ideal Answer (60 seconds):
+
+JDK (Java Development Kit) is the complete toolkit used to develop, compile, debug and package Java applications.
+
+JRE (Java Runtime Environment) provides everything required to run Java applications, including the JVM and standard libraries.
+
+JVM (Java Virtual Machine) is the runtime engine that loads, verifies and executes Java bytecode by translating it into native machine instructions.
+
+Relationship:
+
+JDK
+ ├── JRE
+ │    ├── JVM
+ │    └── Java Libraries
+ ├── javac
+ ├── java
+ ├── jar
+ ├── javadoc
+ └── jdb
+
+==================================================
+2. JDK
+==================================================
+
+Purpose:
+- Develop Java applications
+- Compile source code
+- Debug applications
+- Package JAR files
+
+Key Tools:
+- javac
+- java
+- jar
+- javadoc
+- jdb
+
+==================================================
+3. JRE
+==================================================
+
+Contains:
+- JVM
+- Core Java libraries
+- Runtime support
+
+Responsibilities:
+- Execute bytecode
+- Provide Java APIs
+- Manage runtime
+
+==================================================
+4. JVM
+==================================================
+
+Responsibilities:
+1. Class Loading
+2. Bytecode Verification
+3. Memory Management
+4. Garbage Collection
+5. JIT Compilation
+6. Thread Management
+
+Execution Flow:
+
+.java
+  |
+javac
+  |
+.class
+  |
+Class Loader
+  |
+Bytecode Verifier
+  |
+Execution Engine
+  |
+Native Machine Code
+
+==================================================
+5. Common Interview Questions
+==================================================
+
+Q. Can Java run without JVM?
+A. No.
+
+Q. Does JDK include JRE?
+A. Yes.
+
+Q. Does JRE include JVM?
+A. Yes.
+
+Q. Which tool compiles Java?
+A. javac.
+
+Q. What performs Garbage Collection?
+A. JVM.
+
+==================================================
+6. Senior Cross Questions
+==================================================
+
+Q. Does JVM interpret or compile?
+
+Answer:
+Initially it interprets bytecode. Frequently executed code is optimized by the JIT compiler into native machine code.
+
+Q. Why use a runtime image in production?
+
+Answer:
+Production doesn't need compiler tools. Smaller runtime images reduce attack surface and image size.
+
+==================================================
+7. Production Example
+==================================================
+
+CI/CD uses the JDK to compile a Spring Boot service.
+
+The generated JAR is deployed.
+
+The JVM loads classes, initializes Spring, manages memory, performs GC, and executes requests.
+
+==================================================
+8. Comparison
+==================================================
+
+JDK = Develop + Compile + Run
+
+JRE = Run
+
+JVM = Execute Bytecode
+
+==================================================
+9. Common Mistakes
+==================================================
+
+- Confusing JDK with JVM.
+- Saying JRE compiles Java.
+- Forgetting that JIT exists.
+
+==================================================
+10. Practice Questions
+==================================================
+
+1. Explain JDK, JRE and JVM.
+2. Explain the execution flow.
+3. What is bytecode?
+4. What is JIT compilation?
+5. Why is Java platform independent?

@@ -1,0 +1,105 @@
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Java Fundamentals
+Chapter 6 — JVM Memory Structure (Deep Dive)
+
+1. Interview Answer
+The JVM divides memory into shared and thread-specific runtime areas.
+
+Shared:
+- Heap
+- Metaspace
+
+Per Thread:
+- JVM Stack
+- Program Counter (PC Register)
+- Native Method Stack
+
+2. Heap
+- Stores objects and arrays
+- Shared across threads
+- Managed by Garbage Collector
+- Common error: OutOfMemoryError
+
+3. JVM Stack
+- One stack per thread
+- Contains stack frames
+- Local variables
+- Method parameters
+- Partial results
+- Common error: StackOverflowError
+
+4. Metaspace
+- Stores class metadata
+- Runtime constant pool
+- Replaced PermGen in Java 8
+
+5. Program Counter
+- One per thread
+- Points to next bytecode instruction
+
+6. Native Method Stack
+- Used by JNI/native methods
+
+7. Memory Diagram
+
+Thread
+  Stack ---> Local Variables
+
+Shared Heap ---> Objects
+
+Metaspace ---> Class Metadata
+
+8. Heap Generations
+Young Generation
+- Eden
+- Survivor S0
+- Survivor S1
+
+Old Generation
+- Long-lived objects
+
+9. Interview Questions
+
+Q. Where are objects stored?
+A. Heap.
+
+Q. Where are local variables stored?
+A. JVM Stack.
+
+Q. Is Heap shared?
+A. Yes.
+
+Q. Does every thread have its own stack?
+A. Yes.
+
+Q. Why was PermGen replaced?
+A. Metaspace grows dynamically and is managed differently.
+
+10. Senior Cross Questions
+
+Why are local variables thread-safe?
+Because each thread owns its own stack.
+
+Why is Heap a contention point?
+Because all threads allocate shared objects there.
+
+11. Production Notes
+
+Spring Boot beans and entities live in Heap.
+Loaded classes are stored in Metaspace.
+
+12. Cheat Sheet
+
+Heap -> Objects
+Stack -> Local Variables
+Metaspace -> Class Metadata
+PC -> Next Instruction
+Native Stack -> JNI
+
+13. Practice
+
+1. Draw JVM memory.
+2. Explain Heap vs Stack.
+3. Explain Metaspace.
+4. Explain StackOverflowError.
+5. Explain OutOfMemoryError.

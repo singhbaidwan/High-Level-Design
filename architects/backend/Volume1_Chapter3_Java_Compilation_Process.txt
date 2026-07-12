@@ -1,0 +1,199 @@
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Java Fundamentals
+Chapter 3 — Java Compilation Process
+
+==================================================
+1. Interview Answer (60 seconds)
+==================================================
+
+Java compilation is a multi-stage process that converts human-readable Java
+source code (.java) into platform-independent bytecode (.class). The bytecode
+is later executed by the JVM.
+
+Pipeline:
+
+Employee.java
+      |
+      v
+ Lexical Analysis
+      |
+ Syntax Parsing
+      |
+ Semantic Analysis
+      |
+ Annotation Processing
+      |
+ Bytecode Generation
+      |
+ Employee.class
+      |
+ JVM
+
+==================================================
+2. Step-by-Step Compilation
+==================================================
+
+Step 1: Source Code
+Example:
+public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello");
+    }
+}
+
+Step 2: Lexical Analysis
+- Breaks source into tokens
+- Keywords, identifiers, operators, literals
+
+Step 3: Parsing
+- Validates grammar
+- Builds Abstract Syntax Tree (AST)
+
+Step 4: Semantic Analysis
+- Type checking
+- Variable resolution
+- Method resolution
+- Access modifier validation
+
+Step 5: Annotation Processing
+- Runs annotation processors (e.g. Lombok, MapStruct)
+
+Step 6: Bytecode Generation
+- Produces .class files
+- Stores metadata and instructions
+
+==================================================
+3. What is Bytecode?
+==================================================
+
+Bytecode is an intermediate instruction set understood by the JVM.
+
+Advantages:
+- Platform independent
+- Compact
+- Verifiable
+- Optimizable by the JIT compiler
+
+==================================================
+4. Class File Contents
+==================================================
+
+A .class file contains:
+- Magic Number (CAFEBABE)
+- Version
+- Constant Pool
+- Access Flags
+- Class Metadata
+- Fields
+- Methods
+- Bytecode
+- Attributes
+
+==================================================
+5. Constant Pool
+==================================================
+
+Stores reusable constants:
+- String literals
+- Method references
+- Class names
+- Field references
+- Numeric constants
+
+This reduces duplication and speeds up linking.
+
+==================================================
+6. Runtime Flow
+==================================================
+
+javac
+  |
+.class
+  |
+Class Loader
+  |
+Verification
+  |
+Linking
+  |
+Initialization
+  |
+Execution
+
+==================================================
+7. Production Perspective
+==================================================
+
+In a Spring Boot application:
+- Maven/Gradle invokes javac during the build.
+- The generated classes are packaged into a JAR.
+- Production servers execute the JAR using the JVM.
+- Frequently executed code paths are optimized by the JIT compiler.
+
+==================================================
+8. Common Interview Questions
+==================================================
+
+Q. Does javac produce machine code?
+A. No. It produces bytecode.
+
+Q. Who executes bytecode?
+A. The JVM.
+
+Q. Why is semantic analysis important?
+A. It catches type and symbol errors before bytecode is generated.
+
+Q. What is the AST?
+A. A tree representation of the program structure created during parsing.
+
+==================================================
+9. Senior-Level Cross Questions
+==================================================
+
+Q. Can compilation succeed but the application still fail?
+A. Yes. Compilation checks syntax and types. Runtime failures such as
+NullPointerException, configuration issues, network failures, or missing classes
+can still occur.
+
+Q. Why is annotation processing performed before bytecode generation?
+A. Annotation processors may generate additional source files that must also be
+compiled.
+
+==================================================
+10. Common Mistakes
+==================================================
+
+- Confusing compilation with execution.
+- Assuming bytecode is machine code.
+- Forgetting annotation processing.
+- Thinking the compiler performs garbage collection.
+
+==================================================
+11. Cheat Sheet
+==================================================
+
+.java
+  ↓
+Tokens
+  ↓
+AST
+  ↓
+Semantic Checks
+  ↓
+Annotation Processing
+  ↓
+.class
+  ↓
+JVM
+  ↓
+Native Code (JIT)
+
+==================================================
+12. Practice
+==================================================
+
+1. Explain every stage of Java compilation.
+2. What is the difference between parsing and semantic analysis?
+3. What is the constant pool?
+4. Why is bytecode platform independent?
+5. What role does the JIT compiler play after compilation?
