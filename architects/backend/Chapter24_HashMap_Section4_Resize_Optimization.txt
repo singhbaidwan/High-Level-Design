@@ -1,0 +1,165 @@
+Backend Engineering Interview Handbook Volume 1 - Java Collections
+Chapter 24 - HashMap
+
+Section 4 - Java 8 Resize Optimization (Node Relocation)
+
+INTRODUCTION
+
+One of the biggest improvements in Java 8 HashMap is the resize
+algorithm.
+
+Prior to Java 8, resizing involved recomputing bucket positions for
+every node. Java 8 takes advantage of the fact that capacity always
+doubles.
+
+OLD CAPACITY = 16 NEW CAPACITY = 32
+
+Instead of performing a complete modulo calculation, HashMap determines
+the new bucket using a single bit test.
+
+THE KEY OBSERVATION
+
+Assume:
+
+oldCapacity = 16
+
+Binary:
+
+16 = 00010000
+
+During resize each node either:
+
+1.  Stays in the SAME bucket.
+2.  Moves exactly oldCapacity positions ahead.
+
+Nothing else can happen.
+
+BIT TEST
+
+OpenJDK performs logic equivalent to:
+
+    if ((hash & oldCapacity) == 0)
+        stay in current bucket;
+    else
+        move to bucket + oldCapacity;
+
+This is one of the most frequently asked senior Java interview
+questions.
+
+EXAMPLE
+
+Old capacity = 16
+
+Old bucket index = 5
+
+Case 1
+
+hash & 16 == 0
+
+Result:
+
+Bucket 5 -> Bucket 5
+
+Case 2
+
+hash & 16 != 0
+
+Result:
+
+Bucket 5 -> Bucket 21
+
+Notice:
+
+21 = 5 + 16
+
+WHY DOES THIS WORK?
+
+Old bucket calculation:
+
+index = hash & (16 - 1)
+
+New bucket calculation:
+
+index = hash & (32 - 1)
+
+The additional bit introduced by doubling the capacity determines
+whether an entry remains where it is or shifts by exactly oldCapacity.
+
+VISUAL EXAMPLE
+
+Before Resize
+
+Bucket 5
+
+Node A | Node B | Node C
+
+After Resize
+
+Bucket 5
+
+Node A | Node C
+
+Bucket 21
+
+Node B
+
+The linked list is split into two smaller chains instead of rebuilding
+from scratch.
+
+WHY IS THIS FASTER?
+
+Advantages:
+
+-   No expensive modulo operation.
+-   Minimal pointer manipulation.
+-   Preserves relative ordering inside each new bucket.
+-   Lower CPU overhead during resize.
+-   Better scalability for large maps.
+
+TIME COMPLEXITY
+
+Resize remains O(n) because every node is visited once.
+
+However, the constant factors are much smaller than older
+implementations.
+
+PRODUCTION IMPLICATIONS
+
+1.  Large HashMaps can still experience latency spikes during resize.
+2.  Always estimate capacity for large caches.
+3.  Avoid repeated growth from 16 -> 32 -> 64 -> 128 when millions of
+    entries are expected.
+4.  Initial sizing significantly improves throughput.
+
+INTERVIEW TRAPS
+
+Q. Are all hashes recomputed during resize?
+
+Answer: No. The stored hash value is reused.
+
+Q. Why does Java 8 resize faster than Java 7?
+
+Answer: It uses the (hash & oldCapacity) optimization to split buckets
+instead of recomputing every bucket position from scratch.
+
+Q. Can an entry move to any bucket?
+
+Answer: No. During a single resize it either stays in the same bucket or
+moves exactly oldCapacity positions ahead.
+
+STAFF ENGINEER DISCUSSION
+
+If you are designing a cache expected to hold one million entries,
+compute the initial capacity up front to avoid multiple resize
+operations. Repeated resizing increases allocation rate, CPU utilization
+and garbage collection pressure.
+
+REVISION
+
+Remember these three facts:
+
+1.  Capacity always doubles.
+2.  Bucket relocation uses (hash & oldCapacity).
+3.  Entries either stay or move by oldCapacity.
+
+End of Section 4.

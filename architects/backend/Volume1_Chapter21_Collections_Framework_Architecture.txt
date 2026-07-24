@@ -1,0 +1,228 @@
+
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Collections Framework
+Chapter 21 — Collections Framework Architecture
+
+==================================================
+1. Interview Answer
+==================================================
+
+The Java Collections Framework (JCF) is a unified architecture for storing,
+retrieving, manipulating and traversing groups of objects. It provides
+interfaces, implementations and algorithms.
+
+Goals:
+- Reusable data structures
+- Consistent APIs
+- Better performance
+- Generic programming
+
+==================================================
+2. Collection Hierarchy
+==================================================
+
+                 Iterable
+                     |
+                Collection
+          /         |         \
+       List        Set       Queue
+        |           |          |
+ ArrayList      HashSet   PriorityQueue
+ LinkedList     TreeSet   ArrayDeque
+ Vector      LinkedHashSet LinkedList
+
+Map is NOT part of Collection.
+
+Map
+ |
+ +-- HashMap
+ +-- LinkedHashMap
+ +-- TreeMap
+ +-- Hashtable
+ +-- ConcurrentHashMap
+
+==================================================
+3. Iterable
+==================================================
+
+Defines the iterator() method.
+
+Enables:
+for (String s : list) {
+    ...
+}
+
+Interview:
+Q. Why does enhanced for-loop work?
+A. Because Collection implements Iterable.
+
+==================================================
+4. Collection Interface
+==================================================
+
+Common Operations:
+- add()
+- remove()
+- contains()
+- size()
+- isEmpty()
+- iterator()
+- clear()
+
+==================================================
+5. List
+==================================================
+
+Characteristics:
+- Ordered
+- Allows duplicates
+- Index based
+
+Implementations:
+- ArrayList
+- LinkedList
+- Vector
+
+Use Cases:
+- Ordered data
+- Frequent reads
+
+==================================================
+6. Set
+==================================================
+
+Characteristics:
+- No duplicates
+
+Implementations:
+- HashSet
+- LinkedHashSet
+- TreeSet
+
+==================================================
+7. Queue
+==================================================
+
+FIFO data structure.
+
+Implementations:
+- LinkedList
+- PriorityQueue
+- ArrayDeque
+
+==================================================
+8. Map
+==================================================
+
+Stores key-value pairs.
+
+Characteristics:
+- Unique keys
+- Duplicate values allowed
+
+Implementations:
+- HashMap
+- LinkedHashMap
+- TreeMap
+- ConcurrentHashMap
+
+==================================================
+9. Generics
+==================================================
+
+Example:
+
+List<String> names = new ArrayList<>();
+
+Benefits:
+- Compile-time type safety
+- Eliminates explicit casting
+- Cleaner code
+
+==================================================
+10. Time Complexity Overview
+==================================================
+
+ArrayList
+- Access O(1)
+- Insert End O(1) amortized
+
+LinkedList
+- Insert Head O(1)
+- Random Access O(n)
+
+HashMap
+- Average Lookup O(1)
+
+TreeMap
+- Lookup O(log n)
+
+==================================================
+11. Interview Questions
+==================================================
+
+Q. Difference between Collection and Collections?
+A.
+Collection is an interface.
+Collections is a utility class.
+
+Q. Is Map a Collection?
+A.
+No.
+
+Q. Why use Generics?
+A.
+Type safety and better readability.
+
+==================================================
+12. Senior Cross Questions
+==================================================
+
+Q. Why is Collection an interface instead of a class?
+
+A.
+It defines a contract while allowing multiple implementations optimized for
+different use cases.
+
+Q. Why doesn't Map extend Collection?
+
+A.
+Map stores key-value mappings instead of individual elements, so its API and
+semantics differ fundamentally.
+
+==================================================
+13. Common Mistakes
+==================================================
+
+- Confusing Collection with Collections.
+- Assuming Map is part of Collection.
+- Using raw types instead of generics.
+- Choosing LinkedList without understanding access cost.
+
+==================================================
+14. Cheat Sheet
+==================================================
+
+Collection
+|
++-- List (Ordered, Duplicates)
+|
++-- Set (Unique)
+|
++-- Queue (FIFO)
+
+Map
+|
++-- HashMap
++-- TreeMap
++-- LinkedHashMap
+
+==================================================
+15. Practice
+==================================================
+
+1. Draw the Collection hierarchy.
+2. Compare List, Set, Queue and Map.
+3. Explain why Map is separate.
+4. Explain Generics.
+5. When would you choose each implementation?

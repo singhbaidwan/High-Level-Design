@@ -1,0 +1,104 @@
+Backend Engineering Interview Handbook Volume 1 – Java Collections
+Chapter 24 – HashMap
+
+Section 3 – OpenJDK resize() Deep Dive
+
+WHY RESIZE EXISTS
+
+A HashMap starts with a limited number of buckets. As more entries are
+inserted, multiple keys begin mapping to the same bucket. Long collision
+chains increase lookup time.
+
+Example (capacity = 16):
+
+Bucket 2 -> User1 Bucket 5 -> User2 Bucket 10 -> User3
+
+After many insertions:
+
+Bucket 0 | v Node -> Node -> Node -> Node -> Node
+
+Instead of average O(1) lookups, performance gradually approaches O(n)
+in the worst case (before treeification). To maintain fast lookups,
+HashMap expands its bucket array.
+
+WHEN DOES RESIZE HAPPEN?
+
+HashMap does NOT resize when the array becomes full.
+
+It resizes when:
+
+    size > threshold
+
+where
+
+    threshold = capacity * loadFactor
+
+Default values: Capacity = 16 Load Factor = 0.75
+
+Threshold:
+
+16 * 0.75 = 12
+
+The first 12 insertions do not resize the table.
+
+The 13th insertion triggers resize.
+
+OPENJDK LOGIC
+
+Simplified implementation:
+
+Node<K,V>[] oldTable = table;
+
+int oldCapacity = (oldTable == null) ? 0 : oldTable.length;
+
+int newCapacity = oldCapacity << 1;
+
+WHY LEFT SHIFT?
+
+Doubling a power-of-two capacity is equivalent to shifting left by one
+bit.
+
+16 << 1 = 32 32 << 1 = 64 64 << 1 = 128
+
+HashMap always doubles capacity, preserving the power-of-two property
+required for efficient bucket calculation using bit masking.
+
+WHY NOT USE capacity * 2?
+
+Modern JVMs optimize both forms effectively. The OpenJDK uses left shift
+because it clearly expresses “double the capacity” while preserving the
+power-of-two design.
+
+WHAT HAPPENS DURING RESIZE?
+
+1.  Allocate a new bucket array with double the capacity.
+2.  Recalculate the destination bucket for every existing node.
+3.  Relink nodes into the new buckets.
+4.  Replace the old table reference with the new one.
+
+This operation has O(n) complexity because every entry must be visited
+exactly once.
+
+AMORTIZED COST
+
+Although resize is expensive, it occurs infrequently. Most insertions
+remain O(1), making put() amortized O(1).
+
+PRODUCTION NOTES
+
+-   Pre-size HashMap when the expected number of entries is known.
+-   Frequent resizing increases CPU usage and object churn.
+-   Large resizes may temporarily increase GC pressure.
+-   Use an appropriate initial capacity for caches and large lookup
+    tables.
+
+INTERVIEW QUESTIONS
+
+1.  When does HashMap resize?
+2.  Why is the default threshold 12?
+3.  Why is capacity always a power of two?
+4.  Why does resize have O(n) complexity?
+5.  Why is put() still considered amortized O(1)?
+6.  What are the production impacts of repeated resizing?
+
+End of Section 3.

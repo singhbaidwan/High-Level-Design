@@ -1,0 +1,142 @@
+Backend Engineering Interview Handbook Volume 1 - Java Collections
+Chapter 24 - HashMap
+
+Section 5 - Treeification and Red-Black Trees
+
+INTRODUCTION
+
+Before Java 8, every collision chain inside a bucket was represented as
+a linked list. If many keys landed in the same bucket, lookup
+performance degraded from O(1) average to O(n) worst case.
+
+Java 8 introduced treeification to improve worst-case performance.
+
+WHEN DOES TREEIFICATION OCCUR?
+
+A bucket is converted from a linked list to a Red-Black Tree only if ALL
+of the following are true:
+
+1.  Bucket size >= 8
+2.  Table capacity >= 64
+
+If the table capacity is less than 64, HashMap resizes instead of
+treeifying.
+
+WHY TWO CONDITIONS?
+
+If the table is still small, collisions are usually caused by
+insufficient capacity rather than poor hash distribution.
+
+Resizing spreads entries across more buckets and often eliminates the
+long collision chain without the extra memory overhead of a tree.
+
+IMPORTANT CONSTANTS
+
+TREEIFY_THRESHOLD = 8 UNTREEIFY_THRESHOLD = 6 MIN_TREEIFY_CAPACITY = 64
+
+These constants are defined in the OpenJDK implementation.
+
+TREEIFY_THRESHOLD
+
+When the number of nodes in a bucket reaches 8, HashMap considers
+converting the linked list into a Red-Black Tree.
+
+UNTREEIFY_THRESHOLD
+
+During resize or removal, if the number of nodes in a tree bucket drops
+below 6, the tree is converted back into a linked list.
+
+This avoids maintaining an expensive tree for only a few elements.
+
+WHY 8 AND 6?
+
+These values were selected after extensive benchmarking.
+
+Tree nodes consume more memory than linked-list nodes because they
+maintain additional references such as parent, left, right and color.
+
+Small buckets are faster as linked lists because tree rotations and
+balancing introduce additional overhead.
+
+MEMORY COMPARISON
+
+Linked List Node - hash - key - value - next
+
+Tree Node - hash - key - value - next - parent - left - right -
+previous - color
+
+Tree nodes require significantly more memory.
+
+RED-BLACK TREE PROPERTIES
+
+A Red-Black Tree is a self-balancing binary search tree.
+
+Key properties:
+
+1.  Every node is either RED or BLACK.
+2.  Root is always BLACK.
+3.  Red nodes cannot have red children.
+4.  Every path from root to leaf contains the same number of black
+    nodes.
+
+These rules guarantee a tree height of O(log n).
+
+LOOKUP COMPARISON
+
+Linked List
+
+Node -> Node -> Node -> Node -> Node
+
+Worst-case lookup: O(n)
+
+Red-Black Tree
+
+          40
+         /         20    60
+      / \    /     10 30  50 70
+
+Worst-case lookup: O(log n)
+
+WHY NOT ALWAYS USE TREES?
+
+Trees are not free.
+
+Disadvantages:
+
+-   Higher memory usage.
+-   More pointer chasing.
+-   Tree rotations during insertion.
+-   More complex implementation.
+
+For small bucket sizes, linked lists are generally faster.
+
+PRODUCTION SCENARIOS
+
+Good hashCode() implementations rarely produce buckets large enough to
+treeify. If treeification happens frequently in production, investigate:
+
+-   Poor hashCode() implementation.
+-   Excessive collisions.
+-   Small initial capacity.
+-   Malicious or adversarial input.
+
+INTERVIEW QUESTIONS
+
+1.  Why was treeification introduced in Java 8?
+2.  Why is TREEIFY_THRESHOLD equal to 8?
+3.  Why must capacity be at least 64?
+4.  Why convert back to a linked list below 6 nodes?
+5.  What is the worst-case complexity before and after Java 8?
+6.  What additional fields exist in TreeNode?
+
+REVISION
+
+Remember:
+
+-   Treeify only after 8 nodes.
+-   Capacity must be at least 64.
+-   Untreeify below 6 nodes.
+-   Trees improve worst-case lookup from O(n) to O(log n).
+-   Most buckets never become trees when hashCode() is well implemented.
+
+End of Section 5.

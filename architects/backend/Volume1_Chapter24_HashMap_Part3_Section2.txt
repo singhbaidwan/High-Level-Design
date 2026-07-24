@@ -1,0 +1,89 @@
+Backend Engineering Interview Handbook
+
+Volume 1 – Java Collections
+
+Chapter 24 – HashMap (Part 3)
+
+Section 2 – OpenJDK putVal() Deep Dive
+
+The Method Signature
+
+    final V putVal(int hash, K key, V value,
+                   boolean onlyIfAbsent,
+                   boolean evict)
+
+This is the core insertion algorithm used by HashMap. Every public put()
+call eventually delegates to putVal().
+
+Parameter breakdown: - hash: Spread hash value. - key: Key to insert. -
+value: Value to associate. - onlyIfAbsent: Used by putIfAbsent(). -
+evict: Used by LinkedHashMap.
+
+High-Level Algorithm 1. Lazily initialize table. 2. Compute bucket index
+using (n-1)&hash. 3. Insert if bucket empty. 4. Otherwise replace
+existing key, traverse linked list or tree. 5. Increment size. 6. Resize
+if threshold exceeded.
+
+Lazy Initialization
+
+if (table == null || table.length == 0) resize();
+
+The default constructor allocates no bucket array until the first
+insertion.
+
+Bucket Calculation
+
+index = (table.length - 1) & hash
+
+Bit masking is faster than modulo.
+
+Empty Bucket Fast Path
+
+if (table[index] == null) table[index] = newNode(…);
+
+This is the fastest insertion path because there is no collision.
+
+Existing Bucket
+
+HashMap compares: 1. hash 2. reference equality (==) 3. equals()
+
+Comparing hash first avoids unnecessary equals() calls.
+
+Linked List Traversal
+
+Node A -> Node B -> Node C
+
+Walk each node until: - matching key found (replace value) - end of
+chain reached (append)
+
+Treeified Buckets
+
+If bucket size >= 8 and capacity >= 64, HashMap converts the bucket into
+a Red-Black Tree, reducing worst-case lookup from O(n) to O(log n).
+
+Why Resize Before Treeifying?
+
+Small tables often collide simply because there are too few buckets.
+Resizing redistributes entries and frequently removes long chains.
+
+Size and Threshold
+
+size++; if (size > threshold) resize();
+
+Defaults: Capacity = 16 Load Factor = 0.75 Threshold = 12
+
+Why Load Factor = 0.75?
+
+0.5 uses more memory but fewer collisions. 1.0 saves memory but
+increases collisions. 0.75 is a practical balance.
+
+Production Notes - Use immutable keys. - Never rely on iteration
+order. - Pre-size large maps. - Use ConcurrentHashMap for concurrent
+writers. - Design good hashCode() implementations.
+
+Interview Questions 1. Why is put() amortized O(1)? 2. Why lazy
+initialization? 3. Why compare hash before equals()? 4. Why resize
+before treeification? 5. Why 0.75? 6. What triggers resize? 7. Why use
+bit masking?
+
+End of Section 2.

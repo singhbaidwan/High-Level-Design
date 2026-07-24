@@ -1,0 +1,195 @@
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Java Fundamentals
+Chapter 8 — Garbage Collection (Deep Dive)
+
+==================================================
+1. Interview Answer
+==================================================
+
+Garbage Collection (GC) is the JVM's automatic memory management mechanism.
+It identifies objects that are no longer reachable by the application and
+reclaims their heap memory, reducing memory leaks and eliminating the need for
+manual memory deallocation.
+
+==================================================
+2. Why Garbage Collection?
+==================================================
+
+Without GC:
+- Developers manually free memory.
+- Memory leaks and dangling pointers are common.
+
+With GC:
+- Automatic memory reclamation.
+- Safer applications.
+- Better developer productivity.
+
+==================================================
+3. Object Lifecycle
+==================================================
+
+new Employee()
+      |
+Allocated in Eden Space
+      |
+Referenced by application
+      |
+Reference removed
+      |
+Object becomes unreachable
+      |
+Garbage Collector reclaims memory
+
+==================================================
+4. Reachability Analysis
+==================================================
+
+The JVM does NOT simply count references.
+
+It starts from GC Roots:
+- Local variables on thread stacks
+- Static variables
+- Active threads
+- JNI references
+
+If an object cannot be reached from any GC Root, it becomes eligible for
+garbage collection.
+
+==================================================
+5. Heap Generations
+==================================================
+
+Young Generation
+- Eden
+- Survivor S0
+- Survivor S1
+
+Old Generation
+- Long-lived objects
+
+Most objects die young, so minor collections focus on the Young Generation.
+
+==================================================
+6. Types of Garbage Collection
+==================================================
+
+Minor GC
+- Cleans Young Generation.
+
+Major GC
+- Cleans Old Generation.
+
+Full GC
+- Cleans the entire heap.
+- Usually causes the longest pauses.
+
+==================================================
+7. Common Collectors
+==================================================
+
+Serial GC
+- Single-threaded
+- Small applications
+
+Parallel GC
+- Multiple GC threads
+- Throughput focused
+
+G1 GC
+- Default in modern JDKs
+- Region-based
+- Predictable pause times
+
+ZGC
+- Extremely low pause times
+- Very large heaps
+
+Shenandoah
+- Concurrent collector
+- Low-latency workloads
+
+==================================================
+8. Common JVM Options
+==================================================
+
+-Xms512m      Initial heap
+-Xmx2g        Maximum heap
+-XX:+UseG1GC  Enable G1
+-Xlog:gc      GC logging (JDK 9+)
+
+==================================================
+9. Common Interview Questions
+==================================================
+
+Q. When is an object eligible for GC?
+A. When it is no longer reachable from any GC Root.
+
+Q. Can we force GC using System.gc()?
+A. No. It is only a request to the JVM.
+
+Q. Where does GC operate?
+A. Heap memory.
+
+Q. Does GC clean stack memory?
+A. No. Stack frames are removed automatically when methods return.
+
+==================================================
+10. Senior Cross Questions
+==================================================
+
+Q. Why can Full GC hurt application latency?
+
+A.
+The application may pause while reclaiming memory, increasing response times.
+
+Q. Why do many backend services prefer G1 or ZGC?
+
+A.
+They provide better pause-time characteristics than older collectors.
+
+Q. Can a memory leak still happen in Java?
+
+A.
+Yes. If unused objects remain strongly referenced, GC cannot reclaim them.
+
+==================================================
+11. Production Example
+==================================================
+
+A Spring Boot service creates millions of DTOs per minute.
+
+Most DTOs become unreachable immediately after request processing and are
+collected during Minor GC.
+
+Long-lived caches survive and eventually move to the Old Generation.
+
+==================================================
+12. Common Mistakes
+==================================================
+
+- Thinking GC runs immediately.
+- Assuming System.gc() guarantees collection.
+- Confusing Minor GC with Full GC.
+- Believing GC prevents all memory leaks.
+
+==================================================
+13. Cheat Sheet
+==================================================
+
+Eligible for GC
+↓
+Reachability Analysis
+↓
+Minor GC (Young)
+↓
+Major/Full GC (Old/Entire Heap)
+
+==================================================
+14. Practice
+==================================================
+
+1. Explain reachability analysis.
+2. Differentiate Minor, Major and Full GC.
+3. Compare Serial, Parallel and G1 GC.
+4. Why can Java still have memory leaks?
+5. Explain GC tuning basics.

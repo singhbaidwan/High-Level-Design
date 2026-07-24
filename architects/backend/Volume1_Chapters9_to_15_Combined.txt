@@ -1,0 +1,205 @@
+
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Java Fundamentals
+Chapters 9–15 (Combined)
+
+==================================================
+CHAPTER 9 – VARIABLES & DATA TYPES
+==================================================
+
+Interview Answer:
+Variables are named memory locations used to store data. Java is a statically
+typed language, so every variable has a declared type.
+
+Variable Types:
+- Local Variables
+- Instance Variables
+- Static (Class) Variables
+
+Primitive Data Types:
+byte, short, int, long, float, double, char, boolean
+
+Reference Types:
+Objects, Arrays, Interfaces, Enums, Strings
+
+Common Questions:
+Q. Why is Java statically typed?
+A. Type checking happens at compile time, improving safety and optimization.
+
+==================================================
+CHAPTER 10 – PRIMITIVE VS WRAPPER CLASSES
+==================================================
+
+Primitive:
+- int, long, double...
+- Faster
+- Stored by value
+- Cannot be null
+
+Wrapper:
+- Integer, Long, Double...
+- Objects
+- Can be null
+- Required for Collections and Generics
+
+Autoboxing:
+int -> Integer
+
+Unboxing:
+Integer -> int
+
+Important:
+Integer caching (-128 to 127)
+
+Interview:
+Q. Why use wrappers?
+A. Collections only store objects, not primitives.
+
+==================================================
+CHAPTER 11 – OBJECT-ORIENTED PROGRAMMING
+==================================================
+
+Four Pillars:
+1. Encapsulation
+2. Inheritance
+3. Polymorphism
+4. Abstraction
+
+Benefits:
+- Reusability
+- Maintainability
+- Extensibility
+- Loose coupling
+
+==================================================
+CHAPTER 12 – CLASSES & OBJECTS
+==================================================
+
+Class:
+Blueprint defining state and behavior.
+
+Object:
+Runtime instance of a class.
+
+Example:
+
+class Employee {
+   int id;
+   String name;
+}
+
+Employee emp = new Employee();
+
+Memory:
+Reference -> Stack
+Object -> Heap
+
+==================================================
+CHAPTER 13 – CONSTRUCTORS
+==================================================
+
+Purpose:
+Initialize objects.
+
+Types:
+- Default Constructor
+- Parameterized Constructor
+- Copy Constructor (user-defined pattern)
+
+Rules:
+- Same name as class
+- No return type
+- Invoked automatically during object creation
+
+Common Interview:
+Can constructors be overloaded?
+Yes.
+
+Can constructors be overridden?
+No.
+
+==================================================
+CHAPTER 14 – ENCAPSULATION
+==================================================
+
+Definition:
+Binding data and methods together while restricting direct access using access
+modifiers.
+
+Implementation:
+- private fields
+- public getters/setters
+
+Advantages:
+- Data hiding
+- Validation
+- Maintainability
+
+==================================================
+CHAPTER 15 – INHERITANCE
+==================================================
+
+Definition:
+Allows one class to acquire properties and behavior from another.
+
+Example:
+
+class Animal {}
+
+class Dog extends Animal {}
+
+Types:
+- Single
+- Multilevel
+- Hierarchical
+
+(Java does not support multiple inheritance of classes.)
+
+Uses:
+- Code reuse
+- Polymorphism
+
+Interview Questions:
+Q. Difference between IS-A and HAS-A?
+A.
+Inheritance represents IS-A.
+Composition represents HAS-A.
+
+Q. Why is multiple inheritance of classes not supported?
+A.
+To avoid ambiguity (Diamond Problem).
+
+==================================================
+COMMON INTERVIEW RAPID FIRE
+==================================================
+
+1. Difference between primitive and wrapper classes.
+2. Explain autoboxing.
+3. Difference between class and object.
+4. Constructor vs method.
+5. Why is encapsulation important?
+6. Why prefer composition over inheritance?
+7. What are access modifiers?
+8. Can a constructor be private?
+9. Can we inherit constructors?
+10. What is object initialization order?
+
+==================================================
+REVISION CHEAT SHEET
+==================================================
+
+Variables -> Local | Instance | Static
+
+Primitive -> Faster, Value Type
+
+Wrapper -> Object, Nullable
+
+Class -> Blueprint
+
+Object -> Instance
+
+Constructor -> Object Initialization
+
+Encapsulation -> Data Hiding
+
+Inheritance -> Code Reuse (IS-A)

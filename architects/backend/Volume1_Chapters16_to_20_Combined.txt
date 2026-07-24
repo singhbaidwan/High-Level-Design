@@ -1,0 +1,783 @@
+
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Java Fundamentals
+Chapters 16–20 (Combined)
+
+==================================================
+CHAPTER 16 – POLYMORPHISM
+==================================================
+
+Definition:
+Polymorphism means "many forms". The same interface or method call can exhibit
+different behavior depending on the actual object.
+
+Types:
+1. Compile-time (Method Overloading)
+2. Runtime (Method Overriding)
+
+Example:
+
+class Animal {
+    void speak() { System.out.println("Animal"); }
+}
+
+class Dog extends Animal {
+    @Override
+    void speak() { System.out.println("Bark"); }
+}
+
+Animal a = new Dog();
+a.speak(); // Bark
+
+Interview Points:
+- Overloading is resolved at compile time.
+- Overriding is resolved at runtime using Dynamic Method Dispatch.
+
+==================================================
+CHAPTER 17 – ABSTRACTION
+==================================================
+
+Definition:
+Abstraction hides implementation details while exposing only essential behavior.
+
+Ways to achieve:
+- Abstract Classes
+- Interfaces
+
+Benefits:
+- Loose coupling
+- Easier maintenance
+- Better extensibility
+
+Real-world Example:
+A payment service exposes processPayment() without exposing gateway-specific
+implementation.
+
+==================================================
+CHAPTER 18 – INTERFACE vs ABSTRACT CLASS
+==================================================
+
+Abstract Class
+- Can have constructors
+- Can have state (instance variables)
+- Can contain abstract and concrete methods
+- Supports partial implementation
+
+Interface
+- Defines a contract
+- Multiple interfaces can be implemented
+- Supports default and static methods (Java 8+)
+- Ideal for capabilities (Runnable, Comparable)
+
+Interview Question:
+When to use Interface?
+- Multiple implementations
+- Loose coupling
+- API contracts
+
+When to use Abstract Class?
+- Shared state and common implementation
+
+==================================================
+CHAPTER 19 – COMPOSITION vs INHERITANCE
+==================================================
+
+Inheritance (IS-A)
+
+Car extends Vehicle
+
+Composition (HAS-A)
+
+Car
+ └── Engine
+
+Why Composition is Preferred:
+- Lower coupling
+- Better flexibility
+- Easier testing
+- Runtime behavior changes
+
+Interview Tip:
+Prefer composition unless there is a strong IS-A relationship.
+
+==================================================
+CHAPTER 20 – ACCESS MODIFIERS
+==================================================
+
+Modifier      Same Class  Package  Subclass  World
+
+private           ✓          ✗         ✗        ✗
+default           ✓          ✓         ✗        ✗
+protected         ✓          ✓         ✓        ✗
+public            ✓          ✓         ✓        ✓
+
+Use Cases:
+private   -> Internal implementation
+default   -> Package-level APIs
+protected -> Framework extension
+public    -> External APIs
+
+==================================================
+COMMON INTERVIEW QUESTIONS
+==================================================
+
+1. Difference between overloading and overriding.
+2. What is Dynamic Method Dispatch?
+3. Why is abstraction important?
+4. Interface vs Abstract Class.
+5. Why prefer composition over inheritance?
+6. Explain the Diamond Problem.
+7. Can interfaces have constructors?
+8. Can abstract classes have constructors?
+9. Can private methods be overridden?
+10. Explain access modifiers with examples.
+
+==================================================
+RAPID COMPARISON
+==================================================
+
+Overloading
+- Same method name
+- Different parameters
+- Compile-time
+
+Overriding
+- Same signature
+- Child class implementation
+- Runtime
+
+Interface
+- Contract
+- Multiple inheritance supported
+
+Abstract Class
+- Shared implementation
+- Shared state
+
+Inheritance
+- IS-A
+
+Composition
+- HAS-A
+
+==================================================
+REVISION CHEAT SHEET
+==================================================
+
+Polymorphism
+ -> Overloading
+ -> Overriding
+
+Abstraction
+ -> Hide implementation
+
+Interface
+ -> Contract
+
+Abstract Class
+ -> Partial implementation
+
+Composition
+ -> HAS-A
+
+Inheritance
+ -> IS-A
+
+==================================================
+PRACTICE
+==================================================
+
+1. Implement runtime polymorphism.
+2. Compare interface and abstract class.
+3. Design a payment system using abstraction.
+4. Refactor inheritance to composition.
+5. Explain dynamic dispatch in JVM interviews.
+
+
+Perfect. From now onwards, **I'm not going to write notes. I'm going to write a book.**
+
+---
+
+# Backend Engineering Interview Handbook
+
+# Volume 1 — Java Collections
+
+# Chapter 24 — HashMap (Part 3)
+
+## OpenJDK Internal Implementation
+
+---
+
+# Chapter Overview
+
+By the end of this chapter you should be able to answer questions like
+
+> Explain HashMap internally.
+
+> Walk me through put().
+
+> Explain resize().
+
+> Why is capacity power of 2?
+
+> Why load factor 0.75?
+
+> Explain treeification.
+
+> Explain HashMap source code.
+
+These questions are asked almost every week in Oracle, Microsoft, Amazon, Google and Uber interviews.
+
+---
+
+# HashMap Source Code
+
+Let's begin with the actual OpenJDK source.
+
+The important fields are
+
+```java
+transient Node<K,V>[] table;
+
+transient int size;
+
+int threshold;
+
+final float loadFactor;
+```
+
+Interviewers LOVE asking these four variables.
+
+---
+
+# table
+
+```
+Node<K,V>[] table
+```
+
+This is the actual hash table.
+
+It is simply an array.
+
+```
+table
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+...
+```
+
+Each position is called a **bucket**.
+
+A bucket can contain
+
+```
+null
+
+or
+
+Node
+
+or
+
+Linked List
+
+or
+
+Red Black Tree
+```
+
+---
+
+# Node Structure
+
+Internally every entry looks like
+
+```java
+static class Node<K,V>{
+
+    final int hash;
+
+    final K key;
+
+    V value;
+
+    Node<K,V> next;
+
+}
+```
+
+Let's understand why every field exists.
+
+---
+
+## hash
+
+```
+final int hash;
+```
+
+Question
+
+Why not calculate hash every time?
+
+Answer
+
+Because hashCode() can be expensive.
+
+Instead HashMap computes it once.
+
+Stores it.
+
+Reuses it.
+
+Avoids repeated calculations.
+
+---
+
+## key
+
+```
+final K key;
+```
+
+Marked final.
+
+Why?
+
+Changing key after insertion breaks lookup.
+
+Therefore HashMap doesn't allow replacing key.
+
+Only value changes.
+
+---
+
+## value
+
+```
+V value;
+```
+
+Notice
+
+Not final.
+
+Because
+
+```
+map.put("A",10);
+
+map.put("A",20);
+```
+
+Key stays same.
+
+Value changes.
+
+---
+
+## next
+
+```
+Node next;
+```
+
+Collision handling.
+
+Suppose
+
+```
+capacity =16
+
+Key A
+
+↓
+
+bucket 5
+
+Key B
+
+↓
+
+bucket 5
+```
+
+Now
+
+```
+Bucket 5
+
+↓
+
+Node A
+
+↓
+
+Node B
+
+↓
+
+Node C
+```
+
+That's why every Node stores next.
+
+---
+
+# HashMap Creation
+
+Let's create
+
+```java
+HashMap<Integer,String> map=new HashMap<>();
+```
+
+Question
+
+Does HashMap immediately allocate 16 buckets?
+
+Most people say Yes.
+
+Wrong.
+
+---
+
+Actually
+
+```
+table == null
+```
+
+No array exists.
+
+Memory allocated
+
+```
+0
+```
+
+Only
+
+```
+loadFactor=0.75
+
+threshold=0
+```
+
+are initialized.
+
+---
+
+Interview Question
+
+When is table allocated?
+
+Answer
+
+During first insertion.
+
+Not constructor.
+
+---
+
+# First put()
+
+Suppose
+
+```java
+map.put(10,"A");
+```
+
+Execution
+
+```
+table==null
+
+↓
+
+resize()
+
+↓
+
+Allocate
+
+16 buckets
+```
+
+Now
+
+```
+Bucket
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+...
+
+15
+```
+
+created.
+
+---
+
+# Computing Hash
+
+Suppose
+
+```
+key=10
+```
+
+Java calls
+
+```
+hashCode()
+```
+
+For Integer
+
+```
+10
+```
+
+Now Java performs
+
+```java
+h ^ (h >>> 16)
+```
+
+Question
+
+Why?
+
+Because
+
+Suppose hashCode only changes upper bits.
+
+Lower bits remain identical.
+
+Without mixing
+
+Many collisions happen.
+
+So Java mixes upper bits.
+
+---
+
+Example
+
+Suppose
+
+```
+hash
+
+1111111100000000
+```
+
+After spreading
+
+```
+11111111
+
+XOR
+
+0000000011111111
+
+↓
+
+Better distribution
+```
+
+This is called
+
+Hash Spreading.
+
+---
+
+# Bucket Calculation
+
+Most beginners think
+
+```
+bucket
+
+=
+
+hash %
+
+capacity
+```
+
+Wrong.
+
+Java performs
+
+```java
+(hash)&(capacity-1)
+```
+
+Suppose
+
+```
+capacity
+
+16
+```
+
+Then
+
+```
+capacity-1
+
+15
+
+1111
+```
+
+Suppose hash
+
+```
+10110110
+```
+
+Bucket
+
+```
+10110110
+
+AND
+
+00001111
+
+=
+
+00000110
+
+Bucket 6
+```
+
+Why AND?
+
+Because
+
+Modulo division is slower.
+
+Bitwise AND
+
+is one CPU instruction.
+
+Extremely fast.
+
+---
+
+# Why Capacity Must Be Power Of Two
+
+Suppose
+
+Capacity
+
+10
+
+Binary
+
+```
+1010
+```
+
+Now
+
+```
+capacity-1
+
+1001
+```
+
+Bit masking becomes uneven.
+
+Distribution becomes poor.
+
+Now suppose
+
+Capacity
+
+16
+
+```
+10000
+```
+
+capacity-1
+
+```
+1111
+```
+
+Perfect mask.
+
+Uniform distribution.
+
+Therefore
+
+HashMap capacity
+
+Always
+
+Power of 2.
+
+---
+
+# Interview Cross Question
+
+Interviewer
+
+Why not use Prime numbers?
+
+Historically many hash tables use primes.
+
+Java chooses
+
+Power of 2
+
+because
+
+Bit masking
+
+is much faster than modulo.
+
+The hash spreading step compensates for potential bias.
+
+---
+
+# putVal()
+
+OpenJDK eventually calls
+
+```java
+putVal(hash,key,value,false,true)
+```

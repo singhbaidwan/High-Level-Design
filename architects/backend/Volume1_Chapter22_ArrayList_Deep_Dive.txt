@@ -1,0 +1,317 @@
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Java Collections
+Chapter 22 — ArrayList (Deep Dive)
+
+==============================
+1. Interview Answer
+==============================
+
+ArrayList is a resizable-array implementation of the List interface.
+It maintains insertion order, allows duplicate elements, provides O(1)
+amortized random access, and is the most commonly used List implementation.
+
+Good interview answer:
+"ArrayList internally uses a dynamically growing Object[] array. When capacity
+is exhausted, Java allocates a larger array and copies existing elements."
+
+==============================
+2. Internal Architecture
+==============================
+
+ArrayList
+    |
+    +-- Object[] elementData
+    +-- int size
+
+Example
+
+elementData
+
++----+----+----+----+----+
+| A  | B  | C  |    |    |
++----+----+----+----+----+
+size = 3
+capacity = 5
+
+Important:
+size != capacity
+
+==============================
+3. Capacity Growth
+==============================
+
+Default constructor:
+
+new ArrayList<>();
+
+No array is allocated immediately.
+
+First insertion creates an array of default capacity.
+
+When full:
+
+Old Capacity = 10
+
+↓
+
+New Capacity = 15
+
+Formula (modern JDK):
+
+newCapacity = old + old/2
+
+Growth factor ≈ 1.5x
+
+Why?
+- Reduces reallocations
+- Controls memory usage
+- Better amortized complexity
+
+==============================
+4. add(E e) Internal Flow
+==============================
+
+add()
+
+↓
+
+Check capacity
+
+↓
+
+If full:
+    grow()
+
+↓
+
+Copy old array
+
+↓
+
+Insert element
+
+↓
+
+size++
+
+Time Complexity
+
+Average: O(1)
+
+Resize: O(n)
+
+Therefore:
+Amortized O(1)
+
+==============================
+5. remove(index)
+==============================
+
+Array before
+
+A B C D E
+
+remove(2)
+
+↓
+
+A B D E
+
+Elements after index shift left.
+
+Complexity:
+O(n)
+
+Interview Question:
+Why is removal expensive?
+
+Because every subsequent element must be copied.
+
+==============================
+6. get(index)
+==============================
+
+Direct array indexing.
+
+return elementData[index];
+
+Complexity:
+O(1)
+
+Reason:
+Array supports random access.
+
+==============================
+7. Memory Diagram
+
+Stack
+
+list -----------+
+
+                |
+
+Heap            v
+
+ArrayList
+
+size=3
+
+↓
+
+Object[]
+
+[Obj1][Obj2][Obj3][ ][ ]
+
+==============================
+8. Fail-Fast Iterator
+==============================
+
+ArrayList maintains modCount.
+
+Iterator stores expectedModCount.
+
+If collection changes structurally outside iterator:
+
+ConcurrentModificationException
+
+Example:
+
+for(String s:list){
+    list.add("X");
+}
+
+Fails immediately.
+
+Correct approach:
+
+Iterator<String> it=list.iterator();
+
+while(it.hasNext()){
+    if(condition)
+        it.remove();
+}
+
+==============================
+9. Performance Summary
+==============================
+
+add(end)        O(1) amortized
+
+add(index)      O(n)
+
+remove(index)   O(n)
+
+get(index)      O(1)
+
+contains()      O(n)
+
+==============================
+10. ArrayList vs LinkedList
+==============================
+
+ArrayList
+- Better cache locality
+- Faster reads
+- Less memory
+- Slow middle insertion
+
+LinkedList
+- Node based
+- Better insert/delete when node known
+- Poor random access
+- Higher memory overhead
+
+In practice ArrayList wins for most workloads.
+
+==============================
+11. Production Usage
+==============================
+
+Use ArrayList for:
+- REST API DTO collections
+- Search results
+- Pagination
+- Read-heavy workloads
+
+Avoid when:
+- Frequent insertions in the middle
+- Massive queue-like operations
+
+==============================
+12. Common Interview Questions
+==============================
+
+Q. Why is add() O(1) amortized?
+
+Q. Difference between size and capacity?
+
+Q. Why is ArrayList faster than LinkedList?
+
+Q. Why is get() O(1)?
+
+Q. How does grow() work?
+
+Q. What causes ConcurrentModificationException?
+
+==============================
+13. Senior-Level Cross Questions
+==============================
+
+Q. Why doesn't ArrayList increase capacity by one?
+
+Answer:
+Growing by one causes frequent reallocations and O(n²) behavior over many insertions.
+
+Q. Why does ArrayList outperform LinkedList despite expensive inserts?
+
+Answer:
+CPU cache locality. Arrays are contiguous in memory, reducing cache misses.
+
+Q. Can ArrayList store primitives?
+
+Answer:
+No. It stores object references. Autoboxing wraps primitives.
+
+==============================
+14. Common Bugs
+==============================
+
+- Removing during foreach
+- Assuming capacity == size
+- Using LinkedList for random access
+- Forgetting ensureCapacity() for large bulk loads
+
+==============================
+15. Best Practices
+==============================
+
+- Pre-size using ensureCapacity() when size is known.
+- Prefer ArrayList over LinkedList unless profiling proves otherwise.
+- Use immutable objects where possible.
+- Avoid repeated remove(0).
+
+==============================
+16. Revision Cheat Sheet
+==============================
+
+Internal Structure -> Object[]
+
+Growth -> 1.5x
+
+Random Access -> O(1)
+
+Insert Middle -> O(n)
+
+Remove Middle -> O(n)
+
+Fail Fast -> modCount
+
+==============================
+17. Practice
+==============================
+
+1. Implement a simplified ArrayList.
+2. Explain grow() with diagrams.
+3. Compare ArrayList and LinkedList.
+4. Explain amortized complexity.
+5. Explain ConcurrentModificationException.

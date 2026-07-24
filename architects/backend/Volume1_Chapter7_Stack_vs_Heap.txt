@@ -1,0 +1,115 @@
+BACKEND ENGINEERING INTERVIEW HANDBOOK
+Volume 1 — Java Fundamentals
+Chapter 7 — Stack vs Heap (Deep Dive)
+
+1. Interview Answer
+
+Stack Memory
+- Per thread
+- Stores stack frames
+- Local variables
+- Method parameters
+- References
+- LIFO structure
+
+Heap Memory
+- Shared across threads
+- Stores objects and arrays
+- Managed by the Garbage Collector
+
+Rule:
+References are typically stored on the stack (when local variables), while the objects they reference are stored on the heap.
+
+2. Memory Diagram
+
+Stack                      Heap
++---------------+         +----------------------+
+| emp --------- |-------> | Employee Object      |
+| count = 10    |         | id = 101             |
++---------------+         | name = Alice         |
+                          +----------------------+
+
+3. Stack
+
+Characteristics:
+- Fast allocation
+- Automatic cleanup
+- Thread-local
+
+Stores:
+- Local variables
+- Parameters
+- Return information
+- References
+
+Error:
+StackOverflowError
+
+4. Heap
+
+Characteristics:
+- Shared
+- Larger
+- Garbage Collected
+
+Stores:
+- Objects
+- Arrays
+- Instance variables
+
+Error:
+OutOfMemoryError
+
+5. Comparison
+
+Stack:
+- Thread specific
+- Fast
+- Auto managed
+
+Heap:
+- Shared
+- Slower allocation
+- GC managed
+
+6. Interview Questions
+
+Q. Where are local variables stored?
+A. Stack.
+
+Q. Where are objects stored?
+A. Heap.
+
+Q. Is Heap shared?
+A. Yes.
+
+Q. Does every thread have its own stack?
+A. Yes.
+
+7. Senior Questions
+
+Why are local variables thread-safe?
+Because every thread has an independent JVM stack.
+
+Why does heavy object allocation increase GC?
+Because all objects are allocated in the heap, increasing garbage collection frequency.
+
+8. Production Example
+
+Spring Boot:
+Controller local variables -> Stack
+Entity and DTO objects -> Heap
+
+9. Common Mistakes
+
+- Objects live on stack.
+- References and objects are the same.
+- Heap is thread-local.
+
+10. Practice
+
+1. Draw stack vs heap.
+2. Explain recursion and StackOverflowError.
+3. Explain OutOfMemoryError.
+4. Explain object lifetime.
+5. Explain stack vs heap from an interview perspective.
